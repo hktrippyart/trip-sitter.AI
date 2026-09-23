@@ -154,8 +154,8 @@ export async function POST(request: Request) {
             ? parsed.basicsModule
             : null,
         ),
-        temperature: 0.65,
-        maxOutputTokens: 1200,
+        temperature: 0.78,
+        maxOutputTokens: 2800,
       },
     });
 
