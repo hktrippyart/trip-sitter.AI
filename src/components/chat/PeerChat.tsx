@@ -27,7 +27,9 @@ type Props = {
   /** Current Peer Support Basics module (modules 1–5) */
   trainingBasicsModule?: PeerBasicsSlug | null;
   /** Fired when the coach signals module completion in chat */
-  onTrainingModuleComplete?: () => void | Promise<void>;
+  onTrainingModuleComplete?: (
+    basicsModule: PeerBasicsSlug,
+  ) => void | Promise<void>;
 };
 
 export function PeerChat({
@@ -119,6 +121,7 @@ export function PeerChat({
       content: trimmed,
     };
     const assistantId = `a-${Date.now()}`;
+    const basicsModuleAtSend = trainingBasicsModule;
     const nextMessages = [...messages, userMsg];
     setMessages([
       ...nextMessages,
@@ -242,9 +245,10 @@ export function PeerChat({
         shouldComplete &&
         mode === "training" &&
         trainingTrack === "peer-basics" &&
-        onTrainingModuleComplete
+        onTrainingModuleComplete &&
+        basicsModuleAtSend
       ) {
-        await onTrainingModuleComplete();
+        await onTrainingModuleComplete(basicsModuleAtSend);
       }
     } catch (err) {
       const code = err instanceof Error ? err.message : "GENERIC";

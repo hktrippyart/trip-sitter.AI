@@ -33,6 +33,15 @@ export function isPeerBasicsComplete(progress: TrainingProgress): boolean {
   return PEER_BASICS_SLUGS.every((slug) => progress.completedSlugs.includes(slug));
 }
 
+export function nextIncompletePeerBasicsSlug(
+  completed: readonly string[],
+): PeerBasicsSlug | null {
+  for (const slug of PEER_BASICS_SLUGS) {
+    if (!completed.includes(slug)) return slug;
+  }
+  return null;
+}
+
 export function markSlugComplete(
   progress: TrainingProgress,
   slug: string,

@@ -68,6 +68,11 @@ export async function markModuleComplete(
   }
 
   const existing = await getCompletedModuleSlugs(userId);
+  if (existing.includes(slug)) {
+    const allDone = isPeerBasicsComplete({ completedSlugs: existing });
+    return { ok: true, completed: existing, allDone };
+  }
+
   const nextAllowed = nextIncompleteModuleSlug(existing);
   if (nextAllowed !== slug) {
     return { ok: false, completed: existing, allDone: false };

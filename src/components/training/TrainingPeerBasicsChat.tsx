@@ -6,7 +6,10 @@ import { useCallback, useEffect, useState } from "react";
 import { PeerChat } from "@/components/chat/PeerChat";
 import { getTrainingPeerBasicsShellCopy } from "@/lib/chat/ui-copy";
 import type { Locale } from "@/lib/i18n";
-import type { PeerBasicsSlug } from "@/lib/training/progress";
+import {
+  nextIncompletePeerBasicsSlug,
+  type PeerBasicsSlug,
+} from "@/lib/training/progress";
 
 export type BasicsModuleSummary = {
   slug: PeerBasicsSlug;
@@ -59,15 +62,16 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
     void loadProgress();
   }, [loadProgress]);
 
-  const completeCurrentModule = useCallback(async () => {
-    if (!currentModule || completing || allDone) return;
+  const completeCurrentModule = useCallback(
+    async (slug: PeerBasicsSlug) => {
+    if (completing || allDone) return;
     setCompleting(true);
     setError(null);
     try {
       const res = await fetch("/api/training/module-complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug: currentModule }),
+        body: JSON.stringify({ slug }),
       });
       if (res.status === 401) {
         router.push(
@@ -83,15 +87,19 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
       if (!res.ok) {
         throw new Error(data.error || "Could not save module progress");
       }
-      setCompleted(data.completedModules ?? []);
+      const doneList = data.completedModules ?? [];
+      setCompleted(doneList);
       setAllDone(Boolean(data.allDone));
-      await loadProgress();
+      setCurrentModule(nextIncompletePeerBasicsSlug(doneList));
+      setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not save progress");
     } finally {
       setCompleting(false);
     }
-  }, [allDone, completing, currentModule, loadProgress, router]);
+  },
+    [allDone, completing, router],
+  );
 
   const activeChatModule: PeerBasicsSlug =
     currentModule ?? modules[modules.length - 1]?.slug ?? "module-1";
@@ -140,10 +148,15 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
             {shell.allDoneHint}
           </p>
         ) : null}
+        {error ? (
+          <p className="mx-auto mt-2 max-w-2xl text-center text-xs text-danger">
+            {error}
+          </p>
+        ) : null}
       </div>
 
       <PeerChat
-        key={`${activeChatModule}-${locale}-open-v2`}
+        key={`${activeChatModule}-${locale}-open-v3`}
         locale={locale}
         mode="training"
         trainingTrack="peer-basics"
@@ -152,30 +165,18 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
         onTrainingModuleComplete={completeCurrentModule}
       />
 
-      <div className="border-t border-line bg-deep/80 px-4 py-3 md:px-8">
-        <div className="mx-auto flex max-w-2xl justify-center sm:justify-end">
-          {allDone ? (
+      {allDone ? (
+        <div className="border-t border-line bg-deep/80 px-4 py-2 md:px-8">
+          <div className="mx-auto flex max-w-2xl justify-end">
             <Link
               href="/training/train-the-trainer"
-              className="inline-flex rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-void"
+              className="inline-flex rounded-full bg-glow px-4 py-2 text-sm font-semibold text-void"
             >
               {shell.goTrainTheTrainer}
             </Link>
-          ) : (
-            <span
-              className="inline-flex cursor-not-allowed rounded-full bg-glow/45 px-5 py-2.5 text-sm font-semibold text-void/90"
-              aria-disabled="true"
-            >
-              {shell.unlockTrainTheTrainer}
-            </span>
-          )}
+          </div>
         </div>
-        {error ? (
-          <p className="mx-auto mt-2 max-w-2xl text-center text-xs text-danger">
-            {error}
-          </p>
-        ) : null}
-      </div>
+      ) : null}
     </div>
   );
 }
