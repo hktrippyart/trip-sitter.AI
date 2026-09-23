@@ -84,7 +84,7 @@ export function buildSitterSystemPrompt(locale: Locale): string {
     locale === "zh-Hant"
       ? `CRITICAL LANGUAGE LOCK (highest priority after safety):
 - Reply ONLY in Traditional Chinese (繁體中文). Prefer natural Hong Kong Cantonese written style.
-- 絕對禁止简体字（中国大陆用字）。只用繁體，例如：講、會、這、邊、體、對、過、還、時、為、發、經、練、準備。
+- 絕對禁止簡體字（中國大陸用字）。只用繁體，例如：講、會、這、邊、體、對、過、還、時、為、發、經、練、準備。
 - Match the site language (繁中). Do NOT switch into English because the user typed a short English word (e.g. "OK") — only switch if they clearly ask for English.
 - Keep emergency numbers, URLs, and medicine names in their original form.`
       : `CRITICAL LANGUAGE LOCK (highest priority after safety):

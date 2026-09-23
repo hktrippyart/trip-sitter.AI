@@ -127,8 +127,8 @@ export async function POST(request: Request) {
   const languageAnchor =
     replyLocale === "zh-Hant"
       ? continuingChinese
-        ? "[Language lock: 繁體／廣東話書面 only — 禁止简体字。Do NOT switch to English for this reply.]"
-        : "[Language lock: 繁體／廣東話書面 only — 禁止简体字。Do not switch to English unless the learner asked.]"
+        ? "[Language lock: 繁體／廣東話書面 only — 禁止簡體字。Do NOT switch to English for this reply.]"
+        : "[Language lock: 繁體／廣東話書面 only — 禁止簡體字。Do not switch to English unless the learner asked.]"
       : "[Language lock: English only. Do not switch to Chinese unless the learner explicitly asked for Chinese.]";
 
   const contents = history.map((m) => {
