@@ -156,7 +156,7 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
       </div>
 
       <PeerChat
-        key={`${activeChatModule}-${locale}-open-v3`}
+        key={`${activeChatModule}-${locale}-open-v5`}
         locale={locale}
         mode="training"
         trainingTrack="peer-basics"

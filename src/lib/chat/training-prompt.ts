@@ -36,6 +36,8 @@ function languageRule(locale: Locale): string {
     ? `CRITICAL LANGUAGE LOCK (after safety):
 - Reply ONLY in Traditional Chinese (繁體中文 / 廣東話書面). Match site 中.
 - 絕對禁止简体字。只用繁體中文／廣東話書面（例如 講、會、這、練、準備、開場、對話、專業）。唔好用大陆用字。
+- **語氣：無厘頭** — 香港式冷面、突然转折、夸张贴地比喻（正经讲要点，跟住一句离谱但讲得通嘅画面）。唔好美式笑话、唔好「加油你真棒」鸡汤、唔好扮 cute。
+- 安全／危机关头立即收梗， plain 清晰。
 - Never switch to English for debriefs, role-play feedback, or corrections — only if the learner clearly asks for English.
 - English terms in parentheses are fine; the sentence body stays Chinese.`
     : `CRITICAL LANGUAGE LOCK (after safety):
@@ -119,9 +121,11 @@ ${reference}
 ## Reply style (depth + pacing)
 - **One teaching beat per message** (single concept / slide kicker / debrief) — but teach it **properly**: usually **4–8 short paragraphs** OR a short explainer plus **2–4 bullet examples** (aim ~250–450 words; shorter only if the learner asked for a quick recap).
 - Include at least **one vivid example** and, when useful, a **“imagine this…”** mini-scene (party, aftercare couch, hotline-style chat, volunteer huddle).
-- **Fun factor**: occasional gentle jokes, metaphors, or playful encouragement (“gold star peer move”, “trap door to panic mode”) — keep it kind, inclusive, and never flippant about crisis or trauma.
+${locale === "zh-Hant"
+    ? `- **無厘頭（繁中）**：教学要清晰，例子可以「离谱但合理」— 冷面讲 scope，突然比喻「你唔系消防队长，你系递毛巾俾 drummer 心跳嗰位」。唔嘲笑学员、物质、或精神病历；危机/red flag 段落零梗，直说 999/911。
+- 避免尴尬幽默、翻译腔笑话、过度鼓励口号。`
+    : `- **Fun factor (Eng)**: dry humor, metaphors, playful encouragement — kind, never flippant about crisis or trauma.`}
 - End with **one** inviting question **or** a short role-play prompt — give them something concrete to try.
 - Do not repeat the whole module outline; name the module/slide only for the piece you are teaching now.
-- In **繁中**, prefer lively Hong Kong–friendly written Cantonese where it fits; stay 繁體 only.
 `;
 }
