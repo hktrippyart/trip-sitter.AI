@@ -342,3 +342,15 @@ export function getDisclaimerContent(locale: Locale): DisclaimerContent {
 }
 
 export const DISCLAIMER_STORAGE_KEY = "ts_sitter_disclaimer_v4";
+
+/** Separate acceptance per UI language (Eng / 中). */
+export function chatDisclaimerStorageKey(
+  locale: Locale,
+  mode: "peer" | "training",
+  trainingTrack?: string,
+): string {
+  if (mode === "training") {
+    return `ts_training_disclaimer_v2_${trainingTrack ?? "peer-basics"}_${locale}`;
+  }
+  return `${DISCLAIMER_STORAGE_KEY}_${locale}`;
+}

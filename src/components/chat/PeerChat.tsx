@@ -5,7 +5,7 @@ import type { Locale } from "@/lib/i18n";
 import { toTraditionalHant } from "@/lib/i18n/simplified-to-traditional";
 import { getChatCopy, getTrainingChatCopy } from "@/lib/chat/ui-copy";
 import { ChatDisclaimerModal } from "@/components/chat/ChatDisclaimerModal";
-import { DISCLAIMER_STORAGE_KEY } from "@/lib/chat/disclaimer";
+import { chatDisclaimerStorageKey } from "@/lib/chat/disclaimer";
 import { parseTrainingModuleComplete } from "@/lib/chat/training-module-complete";
 import { getTrainingBasicsModuleOpening } from "@/lib/chat/training-module-copy";
 import type { TrainingTrackSlug } from "@/lib/training/product-keys";
@@ -40,10 +40,11 @@ export function PeerChat({
   trainingBasicsModule = null,
   onTrainingModuleComplete,
 }: Props) {
-  const disclaimerKey =
-    mode === "training"
-      ? `ts_training_disclaimer_v1_${trainingTrack}`
-      : DISCLAIMER_STORAGE_KEY;
+  const disclaimerKey = chatDisclaimerStorageKey(
+    locale,
+    mode,
+    trainingTrack,
+  );
   const t =
     mode === "training"
       ? getTrainingChatCopy(locale, trainingTrack)
@@ -66,12 +67,16 @@ export function PeerChat({
 
   useEffect(() => {
     try {
-      if (sessionStorage.getItem(disclaimerKey) === "1") {
-        setAccepted(true);
-        setShowDisclaimer(false);
+      const stored = sessionStorage.getItem(disclaimerKey) === "1";
+      setAccepted(stored);
+      setShowDisclaimer(!stored);
+      if (!stored) {
+        setDisclaimerChecked(false);
       }
     } catch {
-      // ignore
+      setAccepted(false);
+      setShowDisclaimer(true);
+      setDisclaimerChecked(false);
     }
   }, [disclaimerKey]);
 
