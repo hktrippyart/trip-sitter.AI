@@ -8,6 +8,7 @@ import {
   resolveReplyLocale,
 } from "@/lib/chat/sitter-prompt";
 import { isLocale, type Locale } from "@/lib/i18n";
+import { toTraditionalHant } from "@/lib/i18n/simplified-to-traditional";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -59,7 +60,10 @@ export async function POST(request: Request) {
   });
 
   if (lastUser && detectHardCrisis(lastUser.content)) {
-    const text = crisisResponse(replyLocale);
+    let text = crisisResponse(replyLocale);
+    if (replyLocale === "zh-Hant") {
+      text = toTraditionalHant(text);
+    }
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       start(controller) {

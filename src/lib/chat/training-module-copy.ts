@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { toTraditionalHant } from "@/lib/i18n/simplified-to-traditional";
 import type { PeerBasicsSlug } from "@/lib/training/progress";
 
 const openingsEn: Record<PeerBasicsSlug, string> = {
@@ -49,5 +50,6 @@ export function getTrainingBasicsModuleOpening(
   slug: PeerBasicsSlug,
 ): string {
   const map = locale === "zh-Hant" ? openingsZh : openingsEn;
-  return map[slug];
+  const text = map[slug];
+  return locale === "zh-Hant" ? toTraditionalHant(text) : text;
 }

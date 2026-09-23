@@ -16,6 +16,7 @@ import {
   getCurrentUserId,
 } from "@/lib/entitlements";
 import { isLocale, type Locale } from "@/lib/i18n";
+import { toTraditionalHant } from "@/lib/i18n/simplified-to-traditional";
 import type { TrainingTrackSlug } from "@/lib/training/product-keys";
 import { isPeerBasicsSlug } from "@/lib/training/peer-basics-completion";
 
@@ -90,7 +91,10 @@ export async function POST(request: Request) {
   });
 
   if (lastUser && detectHardCrisis(lastUser.content)) {
-    const text = crisisResponse(replyLocale);
+    let text = crisisResponse(replyLocale);
+    if (replyLocale === "zh-Hant") {
+      text = toTraditionalHant(text);
+    }
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       start(controller) {
@@ -123,8 +127,8 @@ export async function POST(request: Request) {
   const languageAnchor =
     replyLocale === "zh-Hant"
       ? continuingChinese
-        ? "[Language lock: Your last coach message was Chinese. Continue in 繁體中文 / 廣東話書面 — do NOT switch to English for this reply.]"
-        : "[Language lock: 繁體中文 / 廣東話書面 only. Do not switch to English unless the learner explicitly asked for English.]"
+        ? "[Language lock: 繁體／廣東話書面 only — 禁止简体字。Do NOT switch to English for this reply.]"
+        : "[Language lock: 繁體／廣東話書面 only — 禁止简体字。Do not switch to English unless the learner asked.]"
       : "[Language lock: English only. Do not switch to Chinese unless the learner explicitly asked for Chinese.]";
 
   const contents = history.map((m) => {

@@ -1,4 +1,32 @@
 import type { Locale } from "@/lib/i18n";
+import { toTraditionalHant } from "@/lib/i18n/simplified-to-traditional";
+
+function tradUiCopy(copy: ChatUiCopy): ChatUiCopy {
+  return {
+    crisisStrip: toTraditionalHant(copy.crisisStrip),
+    disclaimerTitle: toTraditionalHant(copy.disclaimerTitle),
+    disclaimerBody: toTraditionalHant(copy.disclaimerBody),
+    accept: toTraditionalHant(copy.accept),
+    openingMessage: toTraditionalHant(copy.openingMessage),
+    placeholder: toTraditionalHant(copy.placeholder),
+    send: toTraditionalHant(copy.send),
+    sending: toTraditionalHant(copy.sending),
+    errorGeneric: toTraditionalHant(copy.errorGeneric),
+    errorConfig: toTraditionalHant(copy.errorConfig),
+    you: toTraditionalHant(copy.you),
+    assistant: copy.assistant,
+  };
+}
+
+function tradPartialCopy(patch: Partial<ChatUiCopy>): Partial<ChatUiCopy> {
+  const out: Partial<ChatUiCopy> = {};
+  for (const [key, value] of Object.entries(patch) as [keyof ChatUiCopy, string][]) {
+    if (value !== undefined) {
+      out[key] = key === "assistant" ? value : toTraditionalHant(value);
+    }
+  }
+  return out;
+}
 
 export type ChatUiCopy = {
   crisisStrip: string;
@@ -43,7 +71,7 @@ const zhHant: ChatUiCopy = {
     "呢度係匿名同儕支援——唔係醫療、心理治療或緊急服務。我唔可以診斷、開藥或提供實體介入。如遇醫療或自傷緊急情況，請致電當地緊急服務，或前往 https://findahelpline.com。繼續即表示你明白以上限制。",
   accept: "我明白 — 繼續",
   openingMessage:
-    "你好 — 我係 trip-sitter.AI。你而家同 AI 同儕支援傾偈，唔係真人醫護。我陪住你。而家發生緊咩事？你想由邊度開始講？",
+    "你好，我係 trip-sitter.AI。你而家同 AI 做同儕支援傾偈，唔係真人醫護。我會陪住你。而家係咩情況？你想由邊度開始講？",
   placeholder: "寫下你而家嘅感受或情況…",
   send: "傳送",
   sending: "傳送中…",
@@ -54,7 +82,7 @@ const zhHant: ChatUiCopy = {
 };
 
 export function getChatCopy(locale: Locale): ChatUiCopy {
-  return locale === "zh-Hant" ? zhHant : en;
+  return locale === "zh-Hant" ? tradUiCopy(zhHant) : en;
 }
 
 const trainingPeerEn: Partial<ChatUiCopy> = {
@@ -139,10 +167,10 @@ export function getTrainingChatCopy(
   const patch =
     track === "peer-basics"
       ? locale === "zh-Hant"
-        ? trainingPeerZh
+        ? tradPartialCopy(trainingPeerZh)
         : trainingPeerEn
       : locale === "zh-Hant"
-        ? trainingTttZh
+        ? tradPartialCopy(trainingTttZh)
         : trainingTttEn;
   return { ...base, ...patch };
 }

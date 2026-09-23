@@ -341,4 +341,4 @@ export function getDisclaimerContent(locale: Locale): DisclaimerContent {
   return locale === "zh-Hant" ? zhHant : en;
 }
 
-export const DISCLAIMER_STORAGE_KEY = "ts_sitter_disclaimer_v3";
+export const DISCLAIMER_STORAGE_KEY = "ts_sitter_disclaimer_v4";

@@ -83,10 +83,13 @@ export function PeerChat({
       {
         id: `opening-assistant-${trainingBasicsModule ?? "default"}`,
         role: "assistant",
-        content: openingMessage,
+        content:
+          locale === "zh-Hant"
+            ? toTraditionalHant(openingMessage)
+            : openingMessage,
       },
     ]);
-  }, [accepted, openingMessage, trainingBasicsModule]);
+  }, [accepted, locale, openingMessage, trainingBasicsModule]);
 
   function acceptDisclaimer() {
     if (!disclaimerChecked) return;
@@ -193,7 +196,10 @@ export function PeerChat({
             if (json.error) throw new Error(json.error);
             if (json.text) {
               assembled += json.text;
-              const snapshot = assembled;
+              let snapshot = assembled;
+              if (locale === "zh-Hant") {
+                snapshot = toTraditionalHant(snapshot);
+              }
               setMessages((prev) =>
                 prev.map((m) =>
                   m.id === assistantId ? { ...m, content: snapshot } : m,

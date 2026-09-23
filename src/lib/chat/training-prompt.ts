@@ -35,7 +35,7 @@ function languageRule(locale: Locale): string {
   return locale === "zh-Hant"
     ? `CRITICAL LANGUAGE LOCK (after safety):
 - Reply ONLY in Traditional Chinese (繁體中文 / 廣東話書面). Match site 中.
-- Never use Simplified Chinese (简体): every character must be 繁體 (e.g. 講、會、這、練、準備、開場). If unsure, prefer Cantonese written forms.
+- 絕對禁止简体字。只用繁體中文／廣東話書面（例如 講、會、這、練、準備、開場、對話、專業）。唔好用大陆用字。
 - Never switch to English for debriefs, role-play feedback, or corrections — only if the learner clearly asks for English.
 - English terms in parentheses are fine; the sentence body stays Chinese.`
     : `CRITICAL LANGUAGE LOCK (after safety):
