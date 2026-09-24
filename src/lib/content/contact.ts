@@ -3,7 +3,6 @@ import type { Locale } from "@/lib/i18n";
 export type ContactContent = {
   title: string;
   lede: string;
-  crisisNote: string;
   form: {
     emailLabel: string;
     emailPlaceholder: string;
@@ -22,9 +21,7 @@ export type ContactContent = {
 const en: ContactContent = {
   title: "Get in touch",
   lede:
-    "Partnerships, press, shop fulfillment, or privacy and terms requests — leave a message below and we will follow up by email.",
-  crisisNote:
-    "We are not a crisis line. If someone is in immediate danger, call local emergency services.",
+    "For partnerships, press or other comments — leave a message below and we will follow up.",
   form: {
     emailLabel: "Your email",
     emailPlaceholder: "you@example.com",
@@ -44,9 +41,7 @@ const en: ContactContent = {
 const zhHant: ContactContent = {
   title: "聯絡我們",
   lede:
-    "合作、傳媒、商店履約，或私隱／條款相關查詢——請喺下面留言，我哋會用你提供嘅電郵回覆。",
-  crisisNote:
-    "我哋唔係危機熱線。如有人處於即時危險，請致電當地緊急服務。",
+    "合作、傳媒或其他查詢——請喺下面留言，我哋會跟進。",
   form: {
     emailLabel: "你的電郵",
     emailPlaceholder: "you@example.com",

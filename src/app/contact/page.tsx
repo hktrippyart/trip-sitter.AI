@@ -25,9 +25,6 @@ export default async function ContactPage() {
       <p className="mt-4 max-w-xl text-base leading-relaxed text-mist">
         {content.lede}
       </p>
-      <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
-        {content.crisisNote}
-      </p>
 
       <div className="mt-10 rounded-3xl bg-void p-6 shadow-sm ring-1 ring-line md:p-8">
         <ContactForm copy={content.form} formEnabled={formEnabled} />
