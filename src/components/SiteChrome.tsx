@@ -22,7 +22,7 @@ export async function SiteChrome({
           <AuthStatus signInLabel={t.signIn} signOutLabel={t.signOut} />
         </div>
         <main className="relative z-10 flex-1">{children}</main>
-        <footer className="border-t border-line bg-void px-5 py-6 text-center text-xs text-muted md:px-8">
+        <footer className="border-t border-line/80 px-5 py-6 text-center text-xs text-muted md:px-8">
           {t.footerDisclaimer}
         </footer>
       </div>
