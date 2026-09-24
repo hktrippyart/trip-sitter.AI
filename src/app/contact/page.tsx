@@ -1,32 +1,36 @@
 import type { Metadata } from "next";
+import { ContactForm } from "@/components/contact/ContactForm";
+import {
+  getContactContent,
+  getContactPageTitle,
+} from "@/lib/content/contact";
+import { isSupabaseConfigured } from "@/lib/config";
+import { getLocale } from "@/lib/locale";
 
-export const metadata: Metadata = { title: "Contact us" };
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return { title: getContactPageTitle(locale) };
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const locale = await getLocale();
+  const content = getContactContent(locale);
+  const formEnabled = isSupabaseConfigured();
+
   return (
-    <div className="mx-auto max-w-3xl px-5 py-14 md:px-8">
-      <p className="text-sm font-medium text-ember">Contact us</p>
-      <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-fog">
-        Get in touch
+    <div className="mx-auto max-w-3xl px-5 py-14 md:px-8 md:py-16">
+      <h1 className="font-display text-4xl font-semibold tracking-tight text-fog md:text-5xl">
+        {content.title}
       </h1>
       <p className="mt-4 max-w-xl text-base leading-relaxed text-mist">
-        For partnerships, press, shop fulfillment questions, or privacy/terms
-        requests, email us. We are not a crisis line — if someone is in immediate
-        danger, call local emergency services.
+        {content.lede}
+      </p>
+      <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
+        {content.crisisNote}
       </p>
 
       <div className="mt-10 rounded-3xl bg-void p-6 shadow-sm ring-1 ring-line md:p-8">
-        <p className="text-sm font-medium text-muted">Email</p>
-        <a
-          href="mailto:hello@trip-sitter.ai"
-          className="mt-2 inline-block text-xl font-semibold text-ember hover:text-ember-bright"
-        >
-          hello@trip-sitter.ai
-        </a>
-        <p className="mt-6 text-sm text-mist">
-          Prefer not to email? Use the flag controls on integration posts for
-          content reports.
-        </p>
+        <ContactForm copy={content.form} formEnabled={formEnabled} />
       </div>
     </div>
   );

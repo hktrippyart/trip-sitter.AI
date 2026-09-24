@@ -53,6 +53,17 @@ create table if not exists public.integration_reports (
 create index if not exists integration_posts_published_at_idx
   on public.integration_posts (published_at desc);
 
+create table if not exists public.contact_inquiries (
+  id uuid primary key default gen_random_uuid(),
+  email text not null,
+  title text not null,
+  message text not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists contact_inquiries_created_at_idx
+  on public.contact_inquiries (created_at desc);
+
 alter table public.profiles enable row level security;
 alter table public.training_progress enable row level security;
 
@@ -71,6 +82,12 @@ create policy "Users update own training progress"
 alter table public.entitlements enable row level security;
 alter table public.integration_posts enable row level security;
 alter table public.integration_reports enable row level security;
+alter table public.contact_inquiries enable row level security;
+
+create policy "Anyone can submit contact inquiries"
+  on public.contact_inquiries for insert
+  to anon, authenticated
+  with check (true);
 
 create policy "Public profiles are readable"
   on public.profiles for select
