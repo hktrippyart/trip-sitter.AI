@@ -21,7 +21,7 @@ export type ContactContent = {
 const en: ContactContent = {
   title: "Get in touch",
   lede:
-    "For partnerships, press or other comments — leave a message below and we will follow up.",
+    "For partnerships, press or other comments — leave a message below.",
   form: {
     emailLabel: "Your email",
     emailPlaceholder: "you@example.com",
@@ -41,7 +41,7 @@ const en: ContactContent = {
 const zhHant: ContactContent = {
   title: "聯絡我們",
   lede:
-    "合作、傳媒或其他查詢——請喺下面留言，我哋會跟進。",
+    "合作、傳媒或其他查詢——請喺下面留言。",
   form: {
     emailLabel: "你的電郵",
     emailPlaceholder: "you@example.com",
