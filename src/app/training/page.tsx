@@ -24,15 +24,13 @@ export default async function TrainingPage() {
     : false;
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-14 md:px-8">
-      <h1 className="max-w-2xl font-display text-4xl font-semibold tracking-tight text-fog md:text-5xl">
+    <div className="mx-auto max-w-3xl px-5 py-14 md:px-8 md:py-16">
+      <h1 className="font-display text-4xl font-semibold tracking-tight text-fog md:text-5xl">
         {content.title}
       </h1>
-      <p className="mt-4 max-w-3xl text-base leading-relaxed text-mist">
-        {content.lede}
-      </p>
+      <p className="mt-4 text-base leading-relaxed text-mist">{content.lede}</p>
 
-      <section className="mt-10 max-w-3xl">
+      <section className="mt-10">
         <h2 className="text-xl font-semibold tracking-tight text-fog md:text-2xl">
           {content.featuresHeading}
         </h2>
