@@ -51,11 +51,11 @@ const hubEn: TrainingHubPageContent = {
     },
     {
       title: "24/7 Intelligent AI Q&A",
-      body: "With an AI mentor on standby, you can ask questions at any time and receive detailed, targeted answers for a truly learner-centric and flexible experience. Through scenario simulations, case studies, and interactive dialogues, you can complete extensive hands-on practice before encountering complex real-world situations.",
+      body: "With an AI mentor on standby, you can ask questions at any time and receive detailed, targeted answers for a truly learner-centric and flexible experience. Through scenario simulations, case studies, and interactive dialogues, you can get extensive hands-on practice before encountering complex real-world situations.",
     },
     {
       title: "Learn at Your Own Pace",
-      body: "Designed with a progressive two-tier training framework, our curriculum includes Peer Support Basics and Train-the-trainer courses—with practical skills for setting up functional harm-reduction stations at large-scale events.",
+      body: "Designed with a progressive two-tier training framework, our curriculum includes Peer Support Basics and Train-the-trainer courses—fundamentals with practical skills for setting up functional harm-reduction stations at large-scale events.",
     },
   ],
 };
