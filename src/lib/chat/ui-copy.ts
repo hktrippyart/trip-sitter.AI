@@ -96,7 +96,7 @@ const trainingPeerEn: Partial<ChatUiCopy> = {
 
 const trainingPeerZh: Partial<ChatUiCopy> = {
   openingMessage:
-    "歡迎嚟 Peer Support Basics 訓練。我係你嘅 AI 教練。我哋會用情境同小測驗，由倫理、陪伴、分流到整合逐步嚟。你想先要個簡介，定係直接由 Module 1 開始？",
+    "歡迎嚟同儕支援基礎訓練。我係你嘅 AI 教練。我哋會用情境同小測驗，由倫理、陪伴、分流到整合逐步嚟。你想先要個簡介，定係直接由 Module 1 開始？",
   placeholder: "提問或者試吓情境…",
   assistant: "訓練教練 · 基礎",
   disclaimerBody:
@@ -114,7 +114,7 @@ const trainingTttEn: Partial<ChatUiCopy> = {
 
 const trainingTttZh: Partial<ChatUiCopy> = {
   openingMessage:
-    "歡迎嚟 Train-the-trainer。我係你嘅 AI 教練，專講活動運作同教義工——分區、團隊角色、簡報、演練同檢討。你係為緊某個活動定定係整緊長期義工培訓？",
+    "歡迎嚟培訓師培訓。我係你嘅 AI 教練，專講活動運作同教義工——分區、團隊角色、簡報、演練同檢討。你係為緊某個活動定定係整緊長期義工培訓？",
   placeholder: "講吓你嘅活動或教學難題…",
   assistant: "訓練教練 · TTT",
   disclaimerBody:
@@ -129,6 +129,9 @@ export type TrainingPeerBasicsShellCopy = {
   goTrainTheTrainer: string;
   unlockTrainTheTrainer: string;
   loadingProgress: string;
+  errorLoadProgress: string;
+  errorSaveProgress: string;
+  pageTitleSuffix: string;
 };
 
 const peerBasicsShellEn: TrainingPeerBasicsShellCopy = {
@@ -140,6 +143,9 @@ const peerBasicsShellEn: TrainingPeerBasicsShellCopy = {
   goTrainTheTrainer: "Go to Train-the-trainer",
   unlockTrainTheTrainer: "Unlock after Peer Support Basics",
   loadingProgress: "Loading your progress…",
+  errorLoadProgress: "Could not load progress.",
+  errorSaveProgress: "Could not save progress.",
+  pageTitleSuffix: "Training chat",
 };
 
 const peerBasicsShellZh: TrainingPeerBasicsShellCopy = {
@@ -147,10 +153,13 @@ const peerBasicsShellZh: TrainingPeerBasicsShellCopy = {
   trackLabel: "同儕支援基礎",
   nowModule: (order, title) => `進行中：Module ${order} — ${title}`,
   allDoneHint:
-    "同儕支援基礎已完成 — 可以繼續傾計，或開始 Train-the-trainer。",
-  goTrainTheTrainer: "前往 Train-the-trainer",
+    "同儕支援基礎已完成 — 可以繼續傾計，或開始培訓師培訓。",
+  goTrainTheTrainer: "前往培訓師培訓",
   unlockTrainTheTrainer: "完成同儕支援基礎後解鎖",
   loadingProgress: "載入進度中…",
+  errorLoadProgress: "無法載入進度。",
+  errorSaveProgress: "無法儲存進度。",
+  pageTitleSuffix: "訓練對話",
 };
 
 export function getTrainingPeerBasicsShellCopy(

@@ -43,7 +43,7 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
       return;
     }
     if (!res.ok) {
-      setError("Could not load progress.");
+      setError(shell.errorLoadProgress);
       setLoading(false);
       return;
     }
@@ -56,7 +56,7 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
     setCurrentModule(data.currentModule);
     setAllDone(data.allDone);
     setLoading(false);
-  }, [router]);
+  }, [router, shell.errorLoadProgress]);
 
   useEffect(() => {
     void loadProgress();
@@ -85,7 +85,7 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
         completedModules?: string[];
       };
       if (!res.ok) {
-        throw new Error(data.error || "Could not save module progress");
+        throw new Error(data.error || shell.errorSaveProgress);
       }
       const doneList = data.completedModules ?? [];
       setCompleted(doneList);
@@ -93,12 +93,14 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
       setCurrentModule(nextIncompletePeerBasicsSlug(doneList));
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not save progress");
+      setError(
+        err instanceof Error ? err.message : shell.errorSaveProgress,
+      );
     } finally {
       setCompleting(false);
     }
   },
-    [allDone, completing, router],
+    [allDone, completing, router, shell.errorSaveProgress],
   );
 
   const activeChatModule: PeerBasicsSlug =

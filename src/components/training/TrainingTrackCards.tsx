@@ -1,14 +1,24 @@
 import Link from "next/link";
+import { getTrainingTrackCardsCopy } from "@/lib/content/training-hub";
+import type { Locale } from "@/lib/i18n";
 import { trainingOfferings } from "@/lib/training/catalog";
 
 type Props = {
+  locale: Locale;
   signedIn: boolean;
   peerBasicsComplete: boolean;
 };
 
-export function TrainingTrackCards({ signedIn, peerBasicsComplete }: Props) {
+export function TrainingTrackCards({
+  locale,
+  signedIn,
+  peerBasicsComplete,
+}: Props) {
+  const copy = getTrainingTrackCardsCopy(locale);
   const peer = trainingOfferings.find((o) => o.track === "peer-basics")!;
   const ttt = trainingOfferings.find((o) => o.track === "train-the-trainer")!;
+  const peerCopy = copy.offering["peer-basics"];
+  const tttCopy = copy.offering["train-the-trainer"];
 
   const peerHref = signedIn
     ? peer.chatPath
@@ -22,57 +32,53 @@ export function TrainingTrackCards({ signedIn, peerBasicsComplete }: Props) {
     <div className="mt-12 grid gap-6 lg:grid-cols-2">
       <article className="flex flex-col rounded-3xl bg-void p-6 shadow-sm ring-1 ring-line md:p-8">
         <p className="text-xs font-medium uppercase tracking-wide text-muted">
-          Part 1
+          {copy.partLabel(1)}
         </p>
         <h2 className="mt-2 font-display text-2xl text-fog md:text-3xl">
-          {peer.name}
+          {peerCopy.name}
         </h2>
         <p className="mt-4 flex-1 text-sm leading-relaxed text-mist">
-          {peer.summary}
+          {peerCopy.summary}
         </p>
-        <p className="mt-3 text-xs text-muted">
-          Interactive AI training chat—same style as trip-sitter.AI peer chat.
-        </p>
+        <p className="mt-3 text-xs text-muted">{peerCopy.priceDisplay}</p>
+        <p className="mt-2 text-xs text-muted">{copy.peerAiNote}</p>
         <Link
           href={peerHref}
           className="mt-6 inline-flex w-fit rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-void"
         >
-          Enter training chat
+          {copy.enterChat}
         </Link>
         {!signedIn ? (
-          <p className="mt-3 text-xs text-muted">
-            Sign in when prompted to save progress and unlock Part 2.
-          </p>
+          <p className="mt-3 text-xs text-muted">{copy.signInHint}</p>
         ) : null}
       </article>
 
       <article className="flex flex-col rounded-3xl bg-void p-6 shadow-sm ring-1 ring-line md:p-8">
         <p className="text-xs font-medium uppercase tracking-wide text-muted">
-          Part 2
+          {copy.partLabel(2)}
         </p>
         <h2 className="mt-2 font-display text-2xl text-fog md:text-3xl">
-          {ttt.name}
+          {tttCopy.name}
         </h2>
         <p className="mt-4 flex-1 text-sm leading-relaxed text-mist">
-          {ttt.summary}
+          {tttCopy.summary}
         </p>
-        <p className="mt-3 text-xs text-muted">
-          Event holding, team ops, and teaching volunteers.
-        </p>
+        <p className="mt-3 text-xs text-muted">{tttCopy.priceDisplay}</p>
+        <p className="mt-2 text-xs text-muted">{copy.tttAiNote}</p>
 
         {peerBasicsComplete ? (
           <Link
             href={tttHref}
             className="mt-6 inline-flex w-fit rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-void"
           >
-            Enter training chat
+            {copy.enterChat}
           </Link>
         ) : (
           <span
             className="mt-6 inline-flex w-fit cursor-not-allowed rounded-full bg-glow/45 px-5 py-2.5 text-sm font-semibold text-void/90"
             aria-disabled="true"
           >
-            Unlock after Peer Support Basics
+            {copy.unlockAfterBasics}
           </span>
         )}
       </article>

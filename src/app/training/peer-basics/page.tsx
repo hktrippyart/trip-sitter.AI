@@ -13,9 +13,11 @@ import { getLocale } from "@/lib/locale";
 import { getPeerBasicsModules } from "@/lib/training/modules";
 import type { PeerBasicsSlug } from "@/lib/training/progress";
 
-export const metadata: Metadata = {
-  title: "Peer Support Basics · Training chat",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const shell = getTrainingPeerBasicsShellCopy(locale);
+  return { title: `${shell.trackLabel} · ${shell.pageTitleSuffix}` };
+}
 
 export default async function PeerBasicsTrainingPage() {
   const userId = await getCurrentUserId();
