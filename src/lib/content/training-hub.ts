@@ -53,7 +53,7 @@ const hubEn: TrainingHubPageContent = {
   features: [
     {
       title: "Standardized Training Content",
-      body: "Benchmarked against international training standards, the curriculum systematically covers core skills in safety protocols, situational de-escalation, psychological support, and harm reduction.",
+      body: "Benchmarked against international training standards, the curriculum systematically covers core skills in safety protocols, situational de-escalation, psychological support for harm reduction.",
     },
     {
       title: "24/7 Intelligent AI Q&A",
@@ -61,7 +61,7 @@ const hubEn: TrainingHubPageContent = {
     },
     {
       title: "Learn at Your Own Pace",
-      body: "Designed with a progressive two-tier training framework, our curriculum includes Peer Support Basics and Train-the-trainer—with practical skills for setting up functional harm-reduction stations at large-scale events.",
+      body: "Designed with a progressive two-tier training framework, our curriculum includes Peer Support Basics and Train-the-trainer courses—with practical skills for setting up functional harm-reduction stations at large-scale events.",
     },
   ],
 };
@@ -85,7 +85,7 @@ const hubZh: TrainingHubPageContent = {
     },
     {
       title: "自主掌握學習節奏",
-      body: "課程採取階梯式培訓體系設計，無論你想掌握基礎陪伴心法，定係希望成為能籌劃大型活動減害站點嘅專業培訓者，都可以獲取完整嘅實務指南。",
+      body: "課程採取階梯式培訓體系設計，無論你想掌握基礎陪伴心法，定係希望成為培訓者籌劃大型活動減害站點，都可以獲取完整嘅實務指南。",
     },
   ],
 };
