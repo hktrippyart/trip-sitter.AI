@@ -92,12 +92,12 @@ const cardsEn: TrainingTrackCardsCopy = {
     "peer-basics": {
       name: "Peer Support Basics",
       summary:
-        "Interactive AI training coach covering ethics, trauma-attuned care, substance basics, field triage, and integration—aligned with peer harm-reduction curriculum.",
+        "Target Audience: Beginners and peer supporters for everyday settings or small gatherings.\n\nCore Skills: Non-judgmental presence (Holding Space), emotional de-escalation, somatic grounding (5-4-3-2-1 / box breathing), and red flag risk detection.",
     },
     "train-the-trainer": {
       name: "Train-the-trainer",
       summary:
-        "Everything in Peer Support Basics plus an AI coach for event holding, team ops, and facilitation—training other volunteers to sit.",
+        "Target Audience: Event organizers, party planners and team trainers.\n\nCore Skills: On-site Chill-out Zone design for large-scale raves, volunteer dispatch SOPs, high-pressure crisis triage, and post-event integration.",
     },
   },
 };
@@ -105,17 +105,17 @@ const cardsEn: TrainingTrackCardsCopy = {
 const cardsZh: TrainingTrackCardsCopy = {
   partLabel: (part) => (part === 1 ? "第一部份" : "第二部份"),
   enterChat: "進入訓練對話",
-  unlockAfterBasics: "完成同儕支援基礎後解鎖",
+  unlockAfterBasics: "完成同行者基礎技巧後解鎖",
   offering: {
     "peer-basics": {
-      name: "同儕支援基礎",
+      name: "同行者基礎技巧",
       summary:
-        "AI 訓練教練涵蓋倫理、創傷知情陪伴、物質基礎、現場分流同整合——對齊同儕減害課程。",
+        "適合對象：初學者、日常或小型聚會陪伴者。\n\n核心技能：無審判陪伴（Holding Space）、情緒降溫、感官接地（5-4-3-2-1 / 箱式呼吸）與紅旗預警。",
     },
     "train-the-trainer": {
-      name: "培訓師培訓",
+      name: "進階教練培訓",
       summary:
-        "包含同儕支援基礎全部內容，另加活動運作、團隊協作同帶領義工嘅 AI 教練。",
+        "適合對象：活動主辦人、派對籌劃者（Party Planners）及團隊培訓者。\n\n核心技能：大型 Rave 現場 Chill-out Zone 佈局、志工團隊調度 SOP、高壓危機分流與活動檢討。",
     },
   },
 };
@@ -128,7 +128,7 @@ const tttShellEn: TrainingTttShellCopy = {
 
 const tttShellZh: TrainingTttShellCopy = {
   backLink: "← 線上課程",
-  trackLabel: "培訓師培訓",
+  trackLabel: "進階教練培訓",
   pageTitleSuffix: "訓練對話",
 };
 

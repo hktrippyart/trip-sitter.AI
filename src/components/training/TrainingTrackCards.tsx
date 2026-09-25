@@ -37,7 +37,7 @@ export function TrainingTrackCards({
         <h2 className="mt-2 font-display text-2xl text-fog md:text-3xl">
           {peerCopy.name}
         </h2>
-        <p className="mt-4 flex-1 text-sm leading-relaxed text-mist">
+        <p className="mt-4 flex-1 whitespace-pre-line text-sm leading-relaxed text-mist">
           {peerCopy.summary}
         </p>
         <Link
@@ -55,7 +55,7 @@ export function TrainingTrackCards({
         <h2 className="mt-2 font-display text-2xl text-fog md:text-3xl">
           {tttCopy.name}
         </h2>
-        <p className="mt-4 flex-1 text-sm leading-relaxed text-mist">
+        <p className="mt-4 flex-1 whitespace-pre-line text-sm leading-relaxed text-mist">
           {tttCopy.summary}
         </p>
 
