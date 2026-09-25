@@ -30,16 +30,16 @@ const en: AboutContent = {
       heading: "Key Advantages of AI Peer Support",
       items: [
         {
-          title: "Zero Judgment & Zero Stigma",
-          body: "Provides a completely anonymous, non-judgmental space where users can speak openly about their condition without fear of societal stigma or repercussions.",
+          title: "Consistent & Standardized Care",
+          body: "Trained strictly on harm-reduction SOPs to ensure consistent, non-directive support without the risk of panic, over-intervention, or bad advice often given by untrained peers.",
         },
         {
           title: "24/7 Immediate Response",
           body: "Eliminates waiting times during late-night panic or crisis, delivering second-level de-escalation and immediate grounding techniques.",
         },
         {
-          title: "Consistent & Standardized Care",
-          body: "Trained strictly on harm-reduction SOPs to ensure consistent, non-directive support without the risk of panic, over-intervention, or bad advice often given by untrained peers.",
+          title: "Zero Judgment & Zero Stigma",
+          body: "Provides a completely anonymous, non-judgmental space where users can speak openly about their condition without fear of societal stigma or repercussions.",
         },
       ],
     },
@@ -107,16 +107,16 @@ const zhHant: AboutContent = {
       heading: "AI 同行支援嘅核心優勢",
       items: [
         {
-          title: "零標籤同零批判",
-          body: "呢度提供一個完全匿名無審判嘅空間俾你坦白傾訴自己嘅真實狀況，無需擔心社會標籤或者負面後果。",
+          title: "高標準與一致性嘅專業陪伴",
+          body: "我哋嘅 AI 經過嚴格根據減害標準作業流程（SOP）進行訓練，提供穩定且非指令式嘅支援，避免從未受訓練朋友因一時慌張而過度干預、誤判甚至俾錯誤指引。",
         },
         {
           title: "24/7 即時秒級回應",
           body: "消除深夜恐慌或心理危機時嘅漫長等待，即時做到秒級嘅情緒降溫同感官接地（Grounding）。",
         },
         {
-          title: "高標準與一致性嘅專業陪伴",
-          body: "我哋嘅 AI 經過嚴格根據減害標準作業流程（SOP）進行訓練，提供穩定且非指令式嘅支援，避免從未受訓練朋友因一時慌張而過度干預、誤判甚至俾錯誤指引。",
+          title: "零標籤同零批判",
+          body: "呢度提供一個完全匿名無審判嘅空間俾你坦白傾訴自己嘅真實狀況，無需擔心社會標籤或者負面後果。",
         },
       ],
     },
