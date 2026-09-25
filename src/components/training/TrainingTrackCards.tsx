@@ -40,17 +40,12 @@ export function TrainingTrackCards({
         <p className="mt-4 flex-1 text-sm leading-relaxed text-mist">
           {peerCopy.summary}
         </p>
-        <p className="mt-3 text-xs text-muted">{peerCopy.priceDisplay}</p>
-        <p className="mt-2 text-xs text-muted">{copy.peerAiNote}</p>
         <Link
           href={peerHref}
           className="mt-6 inline-flex w-fit rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-void"
         >
           {copy.enterChat}
         </Link>
-        {!signedIn ? (
-          <p className="mt-3 text-xs text-muted">{copy.signInHint}</p>
-        ) : null}
       </article>
 
       <article className="flex flex-col rounded-3xl bg-void p-6 shadow-sm ring-1 ring-line md:p-8">
@@ -63,8 +58,6 @@ export function TrainingTrackCards({
         <p className="mt-4 flex-1 text-sm leading-relaxed text-mist">
           {tttCopy.summary}
         </p>
-        <p className="mt-3 text-xs text-muted">{tttCopy.priceDisplay}</p>
-        <p className="mt-2 text-xs text-muted">{copy.tttAiNote}</p>
 
         {peerBasicsComplete ? (
           <Link
