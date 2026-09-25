@@ -66,7 +66,7 @@ const hubZh: TrainingHubPageContent = {
     "為 Facilitator／Sitter 同行者而設嘅 AI 互動式標準培訓課程。",
   title: "AI 互動式培訓",
   lede:
-    "為 Facilitator／Sitter「同行者」而設嘅標準培訓課程，具有 AI 雙向對答系統，唔使被動接收資訊；你可以喺模擬環境中隨時發問、即時演練，令每一次學習成為有溫度嘅互動體驗。",
+    "為 Facilitator／Sitter「同行者」而設嘅標準培訓課程，具有 AI 雙向對答系統，你可以喺模擬環境中隨時發問即時演練，令每一次學習成為有溫度嘅互動體驗。",
   featuresHeading: "核心特色",
   features: [
     {
