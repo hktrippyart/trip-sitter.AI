@@ -99,6 +99,8 @@ ${mod.subtitle}
 
 Use the slide content below as your checklist — cover it **gradually across many turns** (one subsection / idea per reply). Before emitting [[ts:module-complete]], you must have taught every section with at least one check-in or scenario spread across the conversation — not in one wall of text.
 
+**App advance rule:** The learner's UI moves to the next module ONLY when your reply ends with the exact line \`[[ts:module-complete]]\`. Saying "module complete" or "we can start Module ${mod.order + 1}" in prose without that token does **not** advance them. When the module is truly finished, your last line must be exactly \`[[ts:module-complete]]\` (nothing after it).
+
 ${modText}
 `;
         })()

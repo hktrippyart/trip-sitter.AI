@@ -228,6 +228,7 @@ export function PeerChat({
 
       const { displayText, shouldComplete } = parseTrainingModuleComplete(
         assembledOut,
+        basicsModuleAtSend,
       );
 
       if (!displayText.trim()) {

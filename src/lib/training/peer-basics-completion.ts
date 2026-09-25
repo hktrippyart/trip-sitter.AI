@@ -62,9 +62,14 @@ export function nextIncompleteModuleSlug(
 export async function markModuleComplete(
   userId: string,
   slug: PeerBasicsSlug,
-): Promise<{ ok: boolean; completed: string[]; allDone: boolean }> {
+): Promise<{
+  ok: boolean;
+  completed: string[];
+  allDone: boolean;
+  reason?: "order" | "db" | "config";
+}> {
   if (!isSupabaseConfigured()) {
-    return { ok: false, completed: [], allDone: false };
+    return { ok: false, completed: [], allDone: false, reason: "config" };
   }
 
   const existing = await getCompletedModuleSlugs(userId);
@@ -75,7 +80,7 @@ export async function markModuleComplete(
 
   const nextAllowed = nextIncompleteModuleSlug(existing);
   if (nextAllowed !== slug) {
-    return { ok: false, completed: existing, allDone: false };
+    return { ok: false, completed: existing, allDone: false, reason: "order" };
   }
 
   const completed = [...existing, slug];
@@ -96,7 +101,7 @@ export async function markModuleComplete(
 
   if (error) {
     console.error("training_progress write failed", error.message);
-    return { ok: false, completed: existing, allDone: false };
+    return { ok: false, completed: existing, allDone: false, reason: "db" };
   }
 
   return { ok: true, completed, allDone };

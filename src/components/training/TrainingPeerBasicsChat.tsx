@@ -96,11 +96,12 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
       setError(
         err instanceof Error ? err.message : shell.errorSaveProgress,
       );
+      void loadProgress();
     } finally {
       setCompleting(false);
     }
   },
-    [allDone, completing, router, shell.errorSaveProgress],
+    [allDone, completing, loadProgress, router, shell.errorSaveProgress],
   );
 
   const activeChatModule: PeerBasicsSlug =

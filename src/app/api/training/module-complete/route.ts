@@ -37,13 +37,20 @@ export async function POST(request: Request) {
 
   const result = await markModuleComplete(userId, parsed.slug);
   if (!result.ok) {
+    const error =
+      result.reason === "db"
+        ? "Could not save progress. Ask your admin to run Supabase migration add-completed-modules.sql, then try again."
+        : result.reason === "config"
+          ? "Training progress requires Supabase."
+          : "Complete modules in order (1 → 5) after working through each in the chat.";
+    const status = result.reason === "db" ? 503 : 400;
     return NextResponse.json(
       {
-        error:
-          "Complete modules in order (1 → 5) after working through each in the chat.",
+        error,
+        code: result.reason ?? "order",
         completedModules: result.completed,
       },
-      { status: 400 },
+      { status },
     );
   }
 
