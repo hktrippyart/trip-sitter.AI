@@ -24,30 +24,32 @@ export default async function TrainingPage() {
     : false;
 
   return (
-    <div className="mx-auto max-w-3xl px-5 py-14 md:px-8 md:py-16">
-      <h1 className="font-display text-4xl font-semibold tracking-tight text-fog md:text-5xl">
-        {content.title}
-      </h1>
-      <p className="mt-4 text-base leading-relaxed text-mist">{content.lede}</p>
+    <div className="mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-16">
+      <div className="mx-auto max-w-3xl">
+        <h1 className="font-display text-4xl font-semibold tracking-tight text-fog md:text-5xl">
+          {content.title}
+        </h1>
+        <p className="mt-4 text-base leading-relaxed text-mist">{content.lede}</p>
 
-      <section className="mt-10">
-        <h2 className="text-xl font-semibold tracking-tight text-fog md:text-2xl">
-          {content.featuresHeading}
-        </h2>
-        <ul className="mt-5 space-y-4">
-          {content.features.map((feature) => (
-            <li
-              key={feature.title}
-              className="rounded-3xl bg-void p-5 shadow-sm ring-1 ring-line md:p-6"
-            >
-              <h3 className="font-semibold text-fog">{feature.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-mist md:text-base">
-                {feature.body}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
+        <section className="mt-10">
+          <h2 className="text-xl font-semibold tracking-tight text-fog md:text-2xl">
+            {content.featuresHeading}
+          </h2>
+          <ul className="mt-5 space-y-4">
+            {content.features.map((feature) => (
+              <li
+                key={feature.title}
+                className="rounded-3xl bg-void p-5 shadow-sm ring-1 ring-line md:p-6"
+              >
+                <h3 className="font-semibold text-fog">{feature.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-mist md:text-base">
+                  {feature.body}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
 
       <TrainingTrackCards
         locale={locale}

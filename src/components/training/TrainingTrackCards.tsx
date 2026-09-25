@@ -29,7 +29,7 @@ export function TrainingTrackCards({
     : `/auth/login?next=${encodeURIComponent(ttt.chatPath)}`;
 
   return (
-    <div className="mt-12 grid gap-6">
+    <div className="mx-auto mt-12 grid max-w-6xl gap-6 md:grid-cols-2">
       <article className="flex flex-col rounded-3xl bg-void p-6 shadow-sm ring-1 ring-line md:p-8">
         <p className="text-xs font-medium uppercase tracking-wide text-muted">
           {copy.partLabel(1)}
