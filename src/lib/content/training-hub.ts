@@ -1,11 +1,18 @@
 import type { Locale } from "@/lib/i18n";
 import type { TrainingTrackSlug } from "@/lib/training/product-keys";
 
+export type TrainingHubFeature = {
+  title: string;
+  body: string;
+};
+
 export type TrainingHubPageContent = {
   metaTitle: string;
   metaDescription: string;
   title: string;
   lede: string;
+  featuresHeading: string;
+  features: TrainingHubFeature[];
 };
 
 export type TrainingTrackCardsCopy = {
@@ -38,18 +45,49 @@ export type TrainingSuccessContent = {
 const hubEn: TrainingHubPageContent = {
   metaTitle: "Online Courses",
   metaDescription:
-    "Peer Support Basics and Train-the-trainer AI training chats.",
-  title: "Online peer-support training",
+    "AI-driven interactive training for facilitators and peer sitters—Peer Support Basics and Train-the-trainer.",
+  title: "AI-Driven Interactive Training",
   lede:
-    "Pick a track and enter the AI training chat—built like our trip-sitter.AI peer coach, focused on teaching sitter skills. Educational only; not a clinical certification.",
+    "A standardized training curriculum designed for Facilitators and Peer Sitters. Powered by AI, you can ask questions anytime and practice within a simulated environment—turning every learning session into a warm, engaging, and interactive experience.",
+  featuresHeading: "Key Features",
+  features: [
+    {
+      title: "Standardized Training Content",
+      body: "Benchmarked against international training standards, the curriculum systematically covers core skills in safety protocols, situational de-escalation, psychological support, and harm reduction.",
+    },
+    {
+      title: "24/7 Intelligent AI Q&A",
+      body: "With an AI mentor on standby, you can ask questions at any time and receive detailed, targeted answers for a truly learner-centric and flexible experience. Through scenario simulations, case studies, and interactive dialogues, you can complete extensive hands-on practice before encountering complex real-world situations.",
+    },
+    {
+      title: "Learn at Your Own Pace",
+      body: "Designed with a progressive two-tier training framework, our curriculum includes Peer Support Basics and Train-the-trainer—with practical skills for setting up functional harm-reduction stations at large-scale events.",
+    },
+  ],
 };
 
 const hubZh: TrainingHubPageContent = {
   metaTitle: "線上課程",
-  metaDescription: "同儕支援基礎與培訓師培訓 AI 訓練對話。",
-  title: "線上同儕支援培訓",
+  metaDescription:
+    "為 Facilitator／Sitter 同行者而設嘅 AI 互動式標準培訓課程。",
+  title: "AI 互動式培訓",
   lede:
-    "選擇課程並進入 AI 訓練對話——風格同 trip-sitter.AI 同儕教練，專注陪行技能。僅供教育用途，並非臨床認證。",
+    "為 Facilitator／Sitter「同行者」而設嘅標準培訓課程，具有 AI 雙向對答系統，唔使被動接收資訊；你可以喺模擬環境中隨時發問、即時演練，令每一次學習成為有溫度嘅互動體驗。",
+  featuresHeading: "核心特色",
+  features: [
+    {
+      title: "嚴謹標準化內容",
+      body: "課程內容參照國際培訓標準，系統化涵蓋安全導航、情境應變、心理支援與減害（Harm Reduction）核心技巧。",
+    },
+    {
+      title: "AI 智能即時對答",
+      body: "AI 導師隨候命，你可以隨時提出任何疑惑，獲取針對性嘅詳細解答，實現真正「以學員為中心」嘅彈性學習。透過情境模擬、案例分析與模擬對話，令你喺實際遇到複雜狀況前進行多次實操演練。",
+    },
+    {
+      title: "自主掌握學習節奏",
+      body: "課程採取階梯式培訓體系設計，無論你想掌握基礎陪伴心法，定係希望成為能籌劃大型活動減害站點嘅專業培訓者，都可以獲取完整嘅實務指南。",
+    },
+  ],
 };
 
 const cardsEn: TrainingTrackCardsCopy = {
