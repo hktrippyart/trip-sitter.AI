@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { TrainingSubscribeComingSoonRedirect } from "@/components/training/TrainingSubscribeComingSoonRedirect";
 import { getTrainingSubscribeComingSoonCopy } from "@/lib/content/training-hub";
 import { getLocale } from "@/lib/locale";
 
@@ -15,6 +16,7 @@ export default async function TrainingSubscribeComingSoonPage() {
 
   return (
     <div className="mx-auto max-w-lg px-5 py-16 md:px-8 md:py-24">
+      <TrainingSubscribeComingSoonRedirect />
       <Link href="/training" className="text-sm text-mist hover:text-fog">
         {copy.backLink}
       </Link>
