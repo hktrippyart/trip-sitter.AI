@@ -23,41 +23,49 @@ export default async function IntegrationPage() {
   const canCreate = Boolean(userId) && isSupabaseConfigured();
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-14 md:px-8">
-      <div className="max-w-3xl">
-        <h1 className="font-display text-3xl font-semibold tracking-tight text-fog md:text-4xl">
+    <div className="mx-auto max-w-6xl px-5 py-14 md:px-8 md:py-16">
+      <div className="mx-auto max-w-3xl">
+        <h1 className="font-display text-4xl font-semibold tracking-tight text-fog md:text-5xl">
           {content.title}
         </h1>
-        <div className="mt-6 space-y-4 text-sm leading-relaxed text-mist md:text-base">
+        <div className="mt-4 space-y-4 text-base leading-relaxed text-mist">
           {content.intro.map((paragraph) => (
             <p key={paragraph.slice(0, 48)}>{paragraph}</p>
           ))}
         </div>
-        <ul className="mt-8 space-y-5">
+
+        <ul className="mt-10 space-y-4">
           {content.features.map((feature) => (
-            <li key={feature.heading} className="text-sm md:text-base">
-              <p className="font-semibold text-fog">{feature.heading}</p>
-              <p className="mt-1 leading-relaxed text-mist">{feature.body}</p>
+            <li
+              key={feature.heading}
+              className="rounded-3xl bg-void p-5 shadow-sm ring-1 ring-line md:p-6"
+            >
+              <h2 className="font-semibold text-fog">{feature.heading}</h2>
+              <p className="mt-2 text-sm leading-relaxed text-mist md:text-base">
+                {feature.body}
+              </p>
             </li>
           ))}
         </ul>
-        <div className="mt-8 space-y-4 text-sm leading-relaxed text-mist md:text-base">
+
+        <div className="mt-10 space-y-4 text-base leading-relaxed text-mist">
           {content.closing.map((paragraph) => (
             <p key={paragraph.slice(0, 48)}>{paragraph}</p>
           ))}
         </div>
-        <div className="mt-8">
+
+        <div className="mt-10">
           {canCreate ? (
             <Link
               href="/integration/new"
-              className="inline-flex rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-void"
+              className="inline-flex rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-void transition hover:bg-ember/90"
             >
               {content.shareCta}
             </Link>
           ) : (
             <Link
               href="/auth/login?next=/integration/new"
-              className="inline-flex rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-fog"
+              className="inline-flex rounded-full bg-glow px-5 py-2.5 text-sm font-semibold text-void transition hover:bg-glow/90"
             >
               {content.signInCta}
             </Link>
@@ -65,7 +73,7 @@ export default async function IntegrationPage() {
         </div>
       </div>
 
-      <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <Link
             key={post.id}
