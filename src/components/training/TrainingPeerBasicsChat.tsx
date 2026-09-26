@@ -59,6 +59,11 @@ export function TrainingPeerBasicsChat({
   const [loading, setLoading] = useState(true);
   const [completing, setCompleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  /** Coach signaled module done; user must confirm before chat advances. */
+  const [pendingCompleteSlug, setPendingCompleteSlug] =
+    useState<PeerBasicsSlug | null>(null);
+  const [activeChatModule, setActiveChatModule] =
+    useState<PeerBasicsSlug>("module-1");
 
   const applyProgress = useCallback((doneList: string[]) => {
     setCompleted(doneList);
@@ -68,7 +73,11 @@ export function TrainingPeerBasicsChat({
 
   const loadProgress = useCallback(async () => {
     if (!cloudSaveEnabled) {
-      applyProgress(loadSessionProgress());
+      const doneList = loadSessionProgress();
+      applyProgress(doneList);
+      setActiveChatModule(
+        nextIncompletePeerBasicsSlug(doneList) ?? "module-5",
+      );
       setLoading(false);
       return;
     }
@@ -93,6 +102,11 @@ export function TrainingPeerBasicsChat({
     setCompleted(data.completedModules);
     setCurrentModule(data.currentModule);
     setAllDone(data.allDone);
+    setActiveChatModule(
+      data.currentModule ??
+        nextIncompletePeerBasicsSlug(data.completedModules) ??
+        "module-5",
+    );
     setLoading(false);
   }, [
     applyProgress,
@@ -105,7 +119,16 @@ export function TrainingPeerBasicsChat({
     void loadProgress();
   }, [loadProgress]);
 
-  const completeCurrentModule = useCallback(
+  const onCoachModuleComplete = useCallback(
+    (slug: PeerBasicsSlug) => {
+      if (allDone || completing) return;
+      if (slug !== activeChatModule) return;
+      setPendingCompleteSlug((prev) => prev ?? slug);
+    },
+    [activeChatModule, allDone, completing],
+  );
+
+  const confirmAdvanceFromModule = useCallback(
     async (slug: PeerBasicsSlug) => {
       if (completing || allDone) return;
       setCompleting(true);
@@ -115,6 +138,11 @@ export function TrainingPeerBasicsChat({
           const doneList = [...new Set([...completed, slug])];
           saveSessionProgress(doneList);
           applyProgress(doneList);
+          const next = nextIncompletePeerBasicsSlug(doneList);
+          if (next) {
+            setActiveChatModule(next);
+          }
+          setPendingCompleteSlug(null);
           setError(null);
           return;
         }
@@ -140,6 +168,11 @@ export function TrainingPeerBasicsChat({
         }
         const doneList = data.completedModules ?? [];
         applyProgress(doneList);
+        const next = nextIncompletePeerBasicsSlug(doneList);
+        if (next) {
+          setActiveChatModule(next);
+        }
+        setPendingCompleteSlug(null);
         setError(null);
       } catch (err) {
         setError(
@@ -164,12 +197,18 @@ export function TrainingPeerBasicsChat({
     ],
   );
 
-  const activeChatModule: PeerBasicsSlug =
-    currentModule ?? modules[modules.length - 1]?.slug ?? "module-1";
+  const activeMeta = modules.find((m) => m.slug === activeChatModule);
 
-  const currentMeta = modules.find(
-    (m) => m.slug === (currentModule ?? activeChatModule),
-  );
+  const pendingMeta = pendingCompleteSlug
+    ? modules.find((m) => m.slug === pendingCompleteSlug)
+    : undefined;
+  const pendingIdx = pendingCompleteSlug
+    ? modules.findIndex((m) => m.slug === pendingCompleteSlug)
+    : -1;
+  const nextAfterPending =
+    pendingIdx >= 0 && pendingIdx < modules.length - 1
+      ? modules[pendingIdx + 1]
+      : undefined;
 
   if (loading) {
     return (
@@ -185,7 +224,7 @@ export function TrainingPeerBasicsChat({
         <div className="mx-auto flex max-w-2xl flex-wrap gap-2">
           {modules.map((mod) => {
             const done = completed.includes(mod.slug);
-            const current = !allDone && mod.slug === currentModule;
+            const current = !allDone && mod.slug === activeChatModule;
             return (
               <span
                 key={mod.slug}
@@ -202,9 +241,9 @@ export function TrainingPeerBasicsChat({
             );
           })}
         </div>
-        {currentMeta && !allDone ? (
+        {activeMeta && !allDone ? (
           <p className="mx-auto mt-2 max-w-2xl text-xs text-mist">
-            {shell.nowModule(currentMeta.order, currentMeta.title)}
+            {shell.nowModule(activeMeta.order, activeMeta.title)}
           </p>
         ) : allDone ? (
           <p className="mx-auto mt-2 max-w-2xl text-xs text-mist">
@@ -225,8 +264,33 @@ export function TrainingPeerBasicsChat({
         trainingTrack="peer-basics"
         trainingBasicsModule={activeChatModule}
         fillParent
-        onTrainingModuleComplete={completeCurrentModule}
+        onTrainingModuleComplete={onCoachModuleComplete}
       />
+
+      {pendingCompleteSlug === activeChatModule && pendingMeta ? (
+        <div className="border-t border-line bg-deep/90 px-4 py-3 md:px-8">
+          <div className="mx-auto flex max-w-2xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs leading-relaxed text-mist sm:max-w-md md:text-sm">
+              {shell.moduleReadyReviewHint}
+            </p>
+            <button
+              type="button"
+              disabled={completing}
+              onClick={() => void confirmAdvanceFromModule(pendingCompleteSlug)}
+              className="shrink-0 rounded-full bg-glow px-4 py-2 text-sm font-semibold text-void transition hover:bg-glow/90 disabled:opacity-60"
+            >
+              {completing
+                ? "…"
+                : nextAfterPending
+                  ? shell.continueToNextModule(
+                      nextAfterPending.order,
+                      nextAfterPending.title,
+                    )
+                  : shell.continueFinishTrack}
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       {allDone ? (
         <div className="border-t border-line bg-deep/80 px-4 py-2 md:px-8">
