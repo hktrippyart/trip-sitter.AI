@@ -176,6 +176,33 @@ export type TrainingSubscribeCardCopy = {
   subscribeRedirecting: string;
 };
 
+export type TrainingSubscribeComingSoonCopy = {
+  metaTitle: string;
+  backLink: string;
+  heading: string;
+  body: string;
+};
+
+const subscribeComingSoonEn: TrainingSubscribeComingSoonCopy = {
+  metaTitle: "Subscribe · Coming soon",
+  backLink: "← Back to training",
+  heading: "Coming soon…",
+  body: "Paid cloud save and full training materials are not available yet. You can still use the free session-only training on the training page.",
+};
+
+const subscribeComingSoonZh: TrainingSubscribeComingSoonCopy = {
+  metaTitle: "訂閱 · 即將推出",
+  backLink: "← 返回培訓",
+  heading: "即將推出…",
+  body: "付費雲端儲存與完整官方教材尚未開放。你仍可使用培訓頁面上的免費 session-only 培訓。",
+};
+
+export function getTrainingSubscribeComingSoonCopy(
+  locale: Locale,
+): TrainingSubscribeComingSoonCopy {
+  return locale === "zh-Hant" ? subscribeComingSoonZh : subscribeComingSoonEn;
+}
+
 const subscribeEn: TrainingSubscribeCardCopy = {
   title: "Optional",
   body: "Free version is session-only which you can still go through all the modules (copy-and-paste function allowed). Monthly subscription of $5 USD offers a cloud-saved chat and full set of training materials.",

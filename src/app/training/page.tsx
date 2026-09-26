@@ -58,7 +58,7 @@ export default async function TrainingPage() {
         peerBasicsComplete={peerBasicsComplete}
       />
 
-      <TrainingSubscribeCard locale={locale} signedIn={signedIn} />
+      <TrainingSubscribeCard locale={locale} />
     </div>
   );
 }
