@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TrainingSubscribeCard } from "@/components/training/TrainingSubscribeCard";
 import { TrainingTrackCards } from "@/components/training/TrainingTrackCards";
 import { getTrainingHubPageContent } from "@/lib/content/training-hub";
 import { getCurrentUserId } from "@/lib/entitlements";
@@ -56,6 +57,8 @@ export default async function TrainingPage() {
         signedIn={signedIn}
         peerBasicsComplete={peerBasicsComplete}
       />
+
+      <TrainingSubscribeCard locale={locale} signedIn={signedIn} />
     </div>
   );
 }

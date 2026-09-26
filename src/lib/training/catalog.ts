@@ -1,8 +1,30 @@
 import {
+  TRAINING_CLOUD_SAVE_KEY,
   TRAINING_FULL_KEY,
   TRAINING_PEER_BASICS_KEY,
   type TrainingTrackSlug,
 } from "./product-keys";
+
+/** Stripe subscription products (not tied to a single chat track). */
+export type TrainingSubscriptionProduct = {
+  id: string;
+  productKey: string;
+  name: string;
+  priceDisplay: string;
+  unitAmountCents: number;
+  stripePriceEnv: string;
+};
+
+export const trainingSubscriptionProducts: TrainingSubscriptionProduct[] = [
+  {
+    id: "training-cloud-save",
+    productKey: TRAINING_CLOUD_SAVE_KEY,
+    name: "Training cloud save",
+    priceDisplay: "$5 USD / month",
+    unitAmountCents: 500,
+    stripePriceEnv: "STRIPE_PRICE_TRAINING_CLOUD_MONTHLY",
+  },
+];
 
 export type TrainingOffering = {
   id: string;
@@ -47,6 +69,25 @@ export function getTrainingOffering(id: string): TrainingOffering | undefined {
   return trainingOfferings.find((o) => o.id === id);
 }
 
+export function getTrainingSubscriptionProduct(
+  id: string,
+): TrainingSubscriptionProduct | undefined {
+  return trainingSubscriptionProducts.find((o) => o.id === id);
+}
+
+export function getTrainingCheckoutProduct(
+  id: string,
+): TrainingOffering | TrainingSubscriptionProduct | undefined {
+  return getTrainingOffering(id) ?? getTrainingSubscriptionProduct(id);
+}
+
+export function getStripePriceIdForProduct(
+  product: TrainingOffering | TrainingSubscriptionProduct,
+): string | undefined {
+  const value = process.env[product.stripePriceEnv];
+  return value && value.length > 0 ? value : undefined;
+}
+
 export function getTrainingOfferingByTrack(
   track: TrainingTrackSlug,
 ): TrainingOffering | undefined {
@@ -56,6 +97,5 @@ export function getTrainingOfferingByTrack(
 export function getStripePriceIdForOffering(
   offering: TrainingOffering,
 ): string | undefined {
-  const value = process.env[offering.stripePriceEnv];
-  return value && value.length > 0 ? value : undefined;
+  return getStripePriceIdForProduct(offering);
 }

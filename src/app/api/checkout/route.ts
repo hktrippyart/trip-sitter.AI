@@ -3,8 +3,8 @@ import { z } from "zod";
 import { isStripeConfigured, isSupabaseConfigured } from "@/lib/config";
 import { getProduct, getStripePriceId } from "@/lib/products";
 import {
-  getStripePriceIdForOffering,
-  getTrainingOffering,
+  getStripePriceIdForProduct,
+  getTrainingCheckoutProduct,
 } from "@/lib/training/catalog";
 import { getAppUrl, getStripe } from "@/lib/stripe";
 import { createClient } from "@/lib/supabase/server";
@@ -29,21 +29,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid product" }, { status: 400 });
   }
 
-  const training = getTrainingOffering(parsed.data.productId);
+  const trainingProduct = getTrainingCheckoutProduct(parsed.data.productId);
   const shop = getProduct(parsed.data.productId);
 
-  if (!training && !shop) {
+  if (!trainingProduct && !shop) {
     return NextResponse.json({ error: "Unknown product" }, { status: 404 });
   }
 
-  const priceId = training
-    ? getStripePriceIdForOffering(training)
+  const priceId = trainingProduct
+    ? getStripePriceIdForProduct(trainingProduct)
     : shop
       ? getStripePriceId(shop)
       : undefined;
 
-  const stripePriceEnv = training
-    ? training.stripePriceEnv
+  const stripePriceEnv = trainingProduct
+    ? trainingProduct.stripePriceEnv
     : shop?.stripePriceEnv;
 
   if (!priceId || !stripePriceEnv) {
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (training && !user) {
+  if (trainingProduct && !user) {
     return NextResponse.json(
       { error: "Sign in before subscribing so we can unlock training access." },
       { status: 401 },
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
   const stripe = getStripe();
   const appUrl = getAppUrl();
 
-  if (training) {
+  if (trainingProduct) {
     const successUrl = `${appUrl}/training?checkout=success&session_id={CHECKOUT_SESSION_ID}`;
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -90,16 +90,16 @@ export async function POST(request: Request) {
       customer_email: email,
       client_reference_id: userId,
       metadata: {
-        product_id: training.id,
+        product_id: trainingProduct.id,
         product_kind: "training",
-        product_key: training.productKey,
+        product_key: trainingProduct.productKey,
         user_id: userId || "",
       },
       subscription_data: {
         metadata: {
-          product_id: training.id,
+          product_id: trainingProduct.id,
           product_kind: "training",
-          product_key: training.productKey,
+          product_key: trainingProduct.productKey,
           user_id: userId || "",
         },
       },
