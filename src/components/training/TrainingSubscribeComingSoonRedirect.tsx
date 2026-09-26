@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const DELAY_MS = 3000;
+const DELAY_MS = 2000;
 
 export function TrainingSubscribeComingSoonRedirect() {
   const router = useRouter();
