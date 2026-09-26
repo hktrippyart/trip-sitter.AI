@@ -40,7 +40,7 @@ const en: IntegrationPageContent = {
     },
   ],
   closing: [
-    "trip-sitter.ai integrates Creative Integration into its core training framework, empowering Facilitators / Sitters to encourage artistic expression—turning every inner journey into a continuous source of life creativity and resilience.",
+    "Creative Integration is part of our core training framework, empowering Facilitators / Sitters to encourage artistic expression—turning every inner journey into a continuous source of life creativity and resilience.",
     "Transform unspeakable experiences into light and shadow that connect us all. Share your creation.",
   ],
   shareCta: "Share a piece",
@@ -71,7 +71,7 @@ const zhHant: IntegrationPageContent = {
     },
   ],
   closing: [
-    "trip-sitter.ai 將「創意整合」納入培訓體系，鼓勵 Facilitator / Sitter 引導求助者善用藝術令每一次的內在探索轉化為生命中綿延不絕的創造力與復原力。",
+    "我哋將「創意整合」納入培訓體系，鼓勵 Facilitator / Sitter 引導求助者善用藝術令每一次的內在探索轉化為生命中綿延不絕的創造力與復原力。",
     "將難以言喻嘅體驗，成為彼此連結嘅光與影，分享你嘅作品。",
   ],
   shareCta: "分享作品",
