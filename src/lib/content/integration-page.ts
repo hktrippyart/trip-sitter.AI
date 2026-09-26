@@ -51,9 +51,9 @@ const zhHant: IntegrationPageContent = {
   metaTitle: "創意整合",
   metaDescription:
     "將難以言喻的體驗轉化為創意表達——同行陪伴與減害旅程中的整合。",
-  title: "創意整合（Creative Integration）",
+  title: "創意整合",
   intro: [
-    "喺同行陪伴同減害（Harm Reduction）嘅完整旅程中，「體驗」只係開端，「整合（Integration）」先係真正改變嘅開始。",
+    "喺同行陪伴同減害（Harm Reduction）嘅完整旅程中，體驗只係開端，整合（Integration）先係真正改變嘅開始。",
     "然而，好多人喺經歷深層嘅意識探索之後面臨「無法言說（Ineffability）」嘅困境——巨大嘅情緒、抽象嘅視覺幾何、對宇宙或自我嘅全新頓悟，往往很難用邏輯語言精準描述。創意整合（Creative Integration）將難以言喻嘅精神體驗同深層情緒轉化為藝術過程係溫柔而強大嘅介面，透過繪畫、自由書寫、音樂創作、直覺肢體流動或手作等，將潛意識符號同混亂情緒表達喺創作之中，令瞬間嘅靈感閃現轉化成日常生活嘅療癒養分。",
   ],
   features: [
