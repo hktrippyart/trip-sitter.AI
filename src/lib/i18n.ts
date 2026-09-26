@@ -72,7 +72,7 @@ const zhHant: Dictionary = {
     home: "trip-sitter.AI",
     training: "線上課程",
     news: "最新消息",
-    integration: "創意整合",
+    integration: "整合",
     shop: "商店",
     resources: "資源",
     contact: "聯絡我們",

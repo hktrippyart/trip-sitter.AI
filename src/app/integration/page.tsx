@@ -2,48 +2,67 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { listIntegrationPosts } from "@/lib/integration/queries";
 import { isSupabaseConfigured } from "@/lib/config";
+import { getIntegrationPageContent } from "@/lib/content/integration-page";
 import { getCurrentUserId } from "@/lib/entitlements";
+import { getLocale } from "@/lib/locale";
 
-export const metadata: Metadata = {
-  title: "Creative Integration",
-  description:
-    "Share image, text, and video that help metabolize post-psychedelic experience.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const content = getIntegrationPageContent(locale);
+  return {
+    title: content.metaTitle,
+    description: content.metaDescription,
+  };
+}
 
 export default async function IntegrationPage() {
+  const locale = await getLocale();
+  const content = getIntegrationPageContent(locale);
   const posts = await listIntegrationPosts();
   const userId = await getCurrentUserId();
   const canCreate = Boolean(userId) && isSupabaseConfigured();
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-14 md:px-8">
-      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-sm font-medium text-ember">Creative Integration</p>
-          <h1 className="mt-3 max-w-2xl font-display text-4xl text-fog md:text-5xl">
-            After the wave, make something
-          </h1>
-          <p className="mt-4 max-w-2xl text-mist">
-            Integration isn’t only talking. Image, writing, and video can help
-            meaning land in the body. Share the piece — and what it helped
-            settle.
-          </p>
+      <div className="max-w-3xl">
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-fog md:text-4xl">
+          {content.title}
+        </h1>
+        <div className="mt-6 space-y-4 text-sm leading-relaxed text-mist md:text-base">
+          {content.intro.map((paragraph) => (
+            <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+          ))}
         </div>
-        {canCreate ? (
-          <Link
-            href="/integration/new"
-            className="rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-void"
-          >
-            Share a piece
-          </Link>
-        ) : (
-          <Link
-            href="/auth/login?next=/integration/new"
-            className="rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-fog"
-          >
-            Sign in to share
-          </Link>
-        )}
+        <ul className="mt-8 space-y-5">
+          {content.features.map((feature) => (
+            <li key={feature.heading} className="text-sm md:text-base">
+              <p className="font-semibold text-fog">{feature.heading}</p>
+              <p className="mt-1 leading-relaxed text-mist">{feature.body}</p>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-8 space-y-4 text-sm leading-relaxed text-mist md:text-base">
+          {content.closing.map((paragraph) => (
+            <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+          ))}
+        </div>
+        <div className="mt-8">
+          {canCreate ? (
+            <Link
+              href="/integration/new"
+              className="inline-flex rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-void"
+            >
+              {content.shareCta}
+            </Link>
+          ) : (
+            <Link
+              href="/auth/login?next=/integration/new"
+              className="inline-flex rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-fog"
+            >
+              {content.signInCta}
+            </Link>
+          )}
+        </div>
       </div>
 
       <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
