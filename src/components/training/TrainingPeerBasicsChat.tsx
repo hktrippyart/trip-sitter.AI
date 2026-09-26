@@ -7,7 +7,10 @@ import { PeerChat } from "@/components/chat/PeerChat";
 import { getTrainingPeerBasicsShellCopy } from "@/lib/chat/ui-copy";
 import type { Locale } from "@/lib/i18n";
 import {
+  isPeerBasicsComplete,
   nextIncompletePeerBasicsSlug,
+  parseProgress,
+  TRAINING_PROGRESS_KEY,
   type PeerBasicsSlug,
 } from "@/lib/training/progress";
 
@@ -20,9 +23,32 @@ export type BasicsModuleSummary = {
 type Props = {
   locale: Locale;
   modules: BasicsModuleSummary[];
+  /** $5/mo cloud save — persisted progress in Supabase; else session-only. */
+  cloudSaveEnabled: boolean;
 };
 
-export function TrainingPeerBasicsChat({ locale, modules }: Props) {
+function loadSessionProgress(): string[] {
+  if (typeof window === "undefined") return [];
+  return parseProgress(sessionStorage.getItem(TRAINING_PROGRESS_KEY))
+    .completedSlugs;
+}
+
+function saveSessionProgress(completed: string[]) {
+  try {
+    sessionStorage.setItem(
+      TRAINING_PROGRESS_KEY,
+      JSON.stringify({ completedSlugs: completed }),
+    );
+  } catch {
+    // ignore quota / private mode
+  }
+}
+
+export function TrainingPeerBasicsChat({
+  locale,
+  modules,
+  cloudSaveEnabled,
+}: Props) {
   const shell = getTrainingPeerBasicsShellCopy(locale);
   const router = useRouter();
   const [completed, setCompleted] = useState<string[]>([]);
@@ -34,7 +60,19 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
   const [completing, setCompleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const applyProgress = useCallback((doneList: string[]) => {
+    setCompleted(doneList);
+    setAllDone(isPeerBasicsComplete({ completedSlugs: doneList }));
+    setCurrentModule(nextIncompletePeerBasicsSlug(doneList));
+  }, []);
+
   const loadProgress = useCallback(async () => {
+    if (!cloudSaveEnabled) {
+      applyProgress(loadSessionProgress());
+      setLoading(false);
+      return;
+    }
+
     const res = await fetch("/api/training/progress");
     if (res.status === 401) {
       router.push(
@@ -56,7 +94,12 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
     setCurrentModule(data.currentModule);
     setAllDone(data.allDone);
     setLoading(false);
-  }, [router, shell.errorLoadProgress]);
+  }, [
+    applyProgress,
+    cloudSaveEnabled,
+    router,
+    shell.errorLoadProgress,
+  ]);
 
   useEffect(() => {
     void loadProgress();
@@ -64,44 +107,61 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
 
   const completeCurrentModule = useCallback(
     async (slug: PeerBasicsSlug) => {
-    if (completing || allDone) return;
-    setCompleting(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/training/module-complete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug }),
-      });
-      if (res.status === 401) {
-        router.push(
-          `/auth/login?next=${encodeURIComponent("/training/peer-basics")}`,
-        );
-        return;
-      }
-      const data = (await res.json()) as {
-        error?: string;
-        allDone?: boolean;
-        completedModules?: string[];
-      };
-      if (!res.ok) {
-        throw new Error(data.error || shell.errorSaveProgress);
-      }
-      const doneList = data.completedModules ?? [];
-      setCompleted(doneList);
-      setAllDone(Boolean(data.allDone));
-      setCurrentModule(nextIncompletePeerBasicsSlug(doneList));
+      if (completing || allDone) return;
+      setCompleting(true);
       setError(null);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : shell.errorSaveProgress,
-      );
-      void loadProgress();
-    } finally {
-      setCompleting(false);
-    }
-  },
-    [allDone, completing, loadProgress, router, shell.errorSaveProgress],
+      try {
+        if (!cloudSaveEnabled) {
+          const doneList = [...new Set([...completed, slug])];
+          saveSessionProgress(doneList);
+          applyProgress(doneList);
+          setError(null);
+          return;
+        }
+
+        const res = await fetch("/api/training/module-complete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ slug }),
+        });
+        if (res.status === 401) {
+          router.push(
+            `/auth/login?next=${encodeURIComponent("/training/peer-basics")}`,
+          );
+          return;
+        }
+        const data = (await res.json()) as {
+          error?: string;
+          allDone?: boolean;
+          completedModules?: string[];
+        };
+        if (!res.ok) {
+          throw new Error(data.error || shell.errorSaveProgress);
+        }
+        const doneList = data.completedModules ?? [];
+        applyProgress(doneList);
+        setError(null);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : shell.errorSaveProgress,
+        );
+        if (cloudSaveEnabled) {
+          void loadProgress();
+        }
+      } finally {
+        setCompleting(false);
+      }
+    },
+    [
+      allDone,
+      applyProgress,
+      cloudSaveEnabled,
+      completed,
+      completing,
+      loadProgress,
+      router,
+      shell.errorSaveProgress,
+    ],
   );
 
   const activeChatModule: PeerBasicsSlug =
@@ -114,7 +174,7 @@ export function TrainingPeerBasicsChat({ locale, modules }: Props) {
   if (loading) {
     return (
       <p className="flex flex-1 items-center justify-center text-sm text-muted">
-        {shell.loadingProgress}
+        {cloudSaveEnabled ? shell.loadingProgress : shell.loadingIdle}
       </p>
     );
   }

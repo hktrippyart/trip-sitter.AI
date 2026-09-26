@@ -129,6 +129,7 @@ export type TrainingPeerBasicsShellCopy = {
   goTrainTheTrainer: string;
   unlockTrainTheTrainer: string;
   loadingProgress: string;
+  loadingIdle: string;
   errorLoadProgress: string;
   errorSaveProgress: string;
   pageTitleSuffix: string;
@@ -143,6 +144,7 @@ const peerBasicsShellEn: TrainingPeerBasicsShellCopy = {
   goTrainTheTrainer: "Go to Train-the-trainer",
   unlockTrainTheTrainer: "Unlock after Peer Support Basics",
   loadingProgress: "Loading your progress…",
+  loadingIdle: "Loading…",
   errorLoadProgress: "Could not load progress.",
   errorSaveProgress: "Could not save progress.",
   pageTitleSuffix: "Training chat",
@@ -157,6 +159,7 @@ const peerBasicsShellZh: TrainingPeerBasicsShellCopy = {
   goTrainTheTrainer: "前往進階教練培訓",
   unlockTrainTheTrainer: "完成同行者基礎技巧後解鎖",
   loadingProgress: "載入進度中…",
+  loadingIdle: "載入中…",
   errorLoadProgress: "無法載入進度。",
   errorSaveProgress: "無法儲存進度。",
   pageTitleSuffix: "訓練對話",

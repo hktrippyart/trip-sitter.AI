@@ -6,7 +6,10 @@ import {
   type BasicsModuleSummary,
 } from "@/components/training/TrainingPeerBasicsChat";
 import { isSupabaseConfigured } from "@/lib/config";
-import { getCurrentUserId } from "@/lib/entitlements";
+import {
+  getCurrentUserId,
+  userHasTrainingCloudSave,
+} from "@/lib/entitlements";
 import { getTrainingPeerBasicsShellCopy } from "@/lib/chat/ui-copy";
 import { getPeerBasicsModuleTitle } from "@/lib/chat/training-module-copy";
 import { getLocale } from "@/lib/locale";
@@ -28,6 +31,7 @@ export default async function PeerBasicsTrainingPage() {
   }
 
   const locale = await getLocale();
+  const cloudSaveEnabled = await userHasTrainingCloudSave(userId);
   const shell = getTrainingPeerBasicsShellCopy(locale);
   const modules: BasicsModuleSummary[] = getPeerBasicsModules().map((m) => ({
     slug: m.slug as PeerBasicsSlug,
@@ -47,7 +51,11 @@ export default async function PeerBasicsTrainingPage() {
         </Link>
         <p className="text-xs font-medium text-muted">{shell.trackLabel}</p>
       </div>
-      <TrainingPeerBasicsChat locale={locale} modules={modules} />
+      <TrainingPeerBasicsChat
+        locale={locale}
+        modules={modules}
+        cloudSaveEnabled={cloudSaveEnabled}
+      />
     </div>
   );
 }

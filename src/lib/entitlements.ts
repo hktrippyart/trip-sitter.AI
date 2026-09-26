@@ -1,4 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/config";
+import { TRAINING_CLOUD_SAVE_KEY } from "@/lib/training/product-keys";
 import { userHasCompletedPeerBasics } from "@/lib/training/peer-basics-completion";
 
 export async function getCurrentUserId(): Promise<string | null> {
@@ -28,4 +29,27 @@ export async function userHasTrainTheTrainerAccess(
 ): Promise<boolean> {
   if (!userId) return false;
   return userHasCompletedPeerBasics(userId);
+}
+
+export async function userHasTrainingCloudSave(
+  userId: string | null,
+): Promise<boolean> {
+  if (!userId || !isSupabaseConfigured()) return false;
+  try {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("entitlements")
+      .select("active")
+      .eq("user_id", userId)
+      .eq("product_key", TRAINING_CLOUD_SAVE_KEY)
+      .maybeSingle();
+    if (error) {
+      console.error("entitlements read failed", error.message);
+      return false;
+    }
+    return Boolean(data?.active);
+  } catch {
+    return false;
+  }
 }
