@@ -21,9 +21,6 @@ export default async function TrainingSubscribeComingSoonPage() {
       <h1 className="mt-6 font-display text-3xl font-semibold text-fog md:text-4xl">
         {copy.heading}
       </h1>
-      <p className="mt-4 text-sm leading-relaxed text-mist md:text-base">
-        {copy.body}
-      </p>
     </div>
   );
 }
