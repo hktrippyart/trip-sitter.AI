@@ -269,10 +269,7 @@ export function TrainingPeerBasicsChat({
 
       {pendingCompleteSlug === activeChatModule && pendingMeta ? (
         <div className="border-t border-line bg-deep/90 px-4 py-3 md:px-8">
-          <div className="mx-auto flex max-w-2xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs leading-relaxed text-mist sm:max-w-md md:text-sm">
-              {shell.moduleReadyReviewHint}
-            </p>
+          <div className="mx-auto flex max-w-2xl justify-end">
             <button
               type="button"
               disabled={completing}

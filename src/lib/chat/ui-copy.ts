@@ -133,7 +133,6 @@ export type TrainingPeerBasicsShellCopy = {
   errorLoadProgress: string;
   errorSaveProgress: string;
   pageTitleSuffix: string;
-  moduleReadyReviewHint: string;
   continueToNextModule: (order: number, title: string) => string;
   continueFinishTrack: string;
 };
@@ -151,8 +150,6 @@ const peerBasicsShellEn: TrainingPeerBasicsShellCopy = {
   errorLoadProgress: "Could not load progress.",
   errorSaveProgress: "Could not save progress.",
   pageTitleSuffix: "Training chat",
-  moduleReadyReviewHint:
-    "This module is ready to complete. Take your time to review the chat, copy notes, or paste into your own doc — then continue when you’re ready.",
   continueToNextModule: (order, title) =>
     `Continue to Module ${order} — ${title}`,
   continueFinishTrack: "Finish Peer Support Basics",
@@ -171,8 +168,6 @@ const peerBasicsShellZh: TrainingPeerBasicsShellCopy = {
   errorLoadProgress: "無法載入進度。",
   errorSaveProgress: "無法儲存進度。",
   pageTitleSuffix: "訓練對話",
-  moduleReadyReviewHint:
-    "此模組已可以完成。請慢慢重溫對話、複製重點或貼到自己的筆記，準備好再繼續。",
   continueToNextModule: (order, title) =>
     `繼續 Module ${order} — ${title}`,
   continueFinishTrack: "完成同行者基礎技巧",
