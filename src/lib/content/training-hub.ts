@@ -209,7 +209,7 @@ const subscribeEn: TrainingSubscribeCardCopy = {
 
 const subscribeZh: TrainingSubscribeCardCopy = {
   title: "可選",
-  body: "免費版為本次瀏覽對話（session-only），你仍可完成全部模組（可自行複製貼上作筆記）。每月 USD $5 訂閱可雲端儲存對話紀錄，並使用完整版官方培訓教材。",
+  body: "免費版僅限於是次瀏覽對話（session-only），你仍可完成全部模組及自行複製貼上筆記。每月 USD $5 訂閱可雲端儲存對話紀錄，並使用完整版官方培訓教材。",
   subscribe: "訂閱",
   subscribeRedirecting: "跳轉中…",
 };
