@@ -71,7 +71,7 @@ const zhHant: IntegrationPageContent = {
     },
   ],
   closing: [
-    "我哋將「創意整合」納入培訓體系，鼓勵 Facilitator / Sitter 引導善用藝術令每一次內在探索轉化為創造力與復原力。",
+    "我哋將創意整合納入培訓體系，鼓勵 Facilitator / Sitter 引導善用藝術令每一次內在探索轉化為新嘅創造力與復原力。",
     "將難以言喻嘅體驗，成為彼此連結嘅光與影，分享你嘅作品。",
   ],
   shareCta: "分享作品",
