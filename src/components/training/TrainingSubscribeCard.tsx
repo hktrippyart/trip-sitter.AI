@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import {
   getTrainingSubscribeCardCopy,
@@ -19,6 +18,10 @@ export function TrainingSubscribeCard({ locale, signedIn }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   async function startSubscribe() {
+    if (!signedIn) {
+      window.location.href = `/auth/login?next=${encodeURIComponent("/training")}`;
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -47,38 +50,18 @@ export function TrainingSubscribeCard({ locale, signedIn }: Props) {
       <h2 className="font-display text-xl font-semibold text-fog md:text-2xl">
         {copy.title}
       </h2>
-      <div className="mt-5 grid gap-5 md:grid-cols-2">
-        <div className="rounded-2xl bg-deep/40 p-4 ring-1 ring-line">
-          <p className="text-xs font-medium uppercase tracking-wide text-muted">
-            {copy.freeHeading}
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-mist">{copy.freeBody}</p>
-        </div>
-        <div className="rounded-2xl bg-deep/40 p-4 ring-1 ring-line">
-          <p className="text-xs font-medium uppercase tracking-wide text-ember">
-            {copy.paidHeading}
-          </p>
-          <p className="mt-2 text-sm leading-relaxed text-mist">{copy.paidBody}</p>
-        </div>
-      </div>
-      <div className="mt-6 flex flex-wrap items-center gap-4">
-        {signedIn ? (
-          <button
-            type="button"
-            onClick={() => void startSubscribe()}
-            disabled={loading}
-            className="rounded-full bg-glow px-6 py-2.5 text-sm font-semibold text-void transition hover:bg-glow/90 disabled:opacity-60"
-          >
-            {loading ? copy.subscribeRedirecting : copy.subscribe}
-          </button>
-        ) : (
-          <Link
-            href={`/auth/login?next=${encodeURIComponent("/training")}`}
-            className="rounded-full bg-glow px-6 py-2.5 text-sm font-semibold text-void transition hover:bg-glow/90"
-          >
-            {copy.signInToSubscribe}
-          </Link>
-        )}
+      <p className="mt-4 max-w-3xl text-sm leading-relaxed text-mist md:text-base">
+        {copy.body}
+      </p>
+      <div className="mt-6">
+        <button
+          type="button"
+          onClick={() => void startSubscribe()}
+          disabled={loading}
+          className="rounded-full bg-glow px-6 py-2.5 text-sm font-semibold text-void transition hover:bg-glow/90 disabled:opacity-60"
+        >
+          {loading ? copy.subscribeRedirecting : copy.subscribe}
+        </button>
       </div>
       {error ? <p className="mt-3 text-sm text-danger">{error}</p> : null}
     </article>

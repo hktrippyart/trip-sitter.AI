@@ -171,39 +171,23 @@ export const TRAINING_CLOUD_SAVE_PRODUCT_ID = "training-cloud-save";
 
 export type TrainingSubscribeCardCopy = {
   title: string;
-  freeHeading: string;
-  freeBody: string;
-  paidHeading: string;
-  paidBody: string;
+  body: string;
   subscribe: string;
   subscribeRedirecting: string;
-  signInToSubscribe: string;
 };
 
 const subscribeEn: TrainingSubscribeCardCopy = {
-  title: "Save your training in the cloud",
-  freeHeading: "Free",
-  freeBody:
-    "Session-only chat — you can still work through every module (Peer Support Basics and Train-the-trainer). Copy and paste is allowed if you want your own notes. Each module opens a fresh chat when you advance.",
-  paidHeading: "$5 USD / month",
-  paidBody:
-    "Cloud-saved chat history plus the full version of official training materials — pick up where you left off on any device.",
+  title: "Optional",
+  body: "Free version is session-only which you can still go through all the modules (copy-and-paste function allowed). Monthly subscription of $5 USD offers a cloud-saved chat and full set of training materials.",
   subscribe: "Subscribe",
   subscribeRedirecting: "Redirecting…",
-  signInToSubscribe: "Sign in to subscribe",
 };
 
 const subscribeZh: TrainingSubscribeCardCopy = {
-  title: "雲端儲存訓練紀錄",
-  freeHeading: "免費",
-  freeBody:
-    "對話只保留喺本次瀏覽（session-only）——你仍可完成全部模組（同行者基礎技巧同進階教練培訓）。可自行複製貼上作筆記。每完成一個模組會開新對話。",
-  paidHeading: "USD $5／月",
-  paidBody:
-    "雲端儲存對話紀錄，並可使用完整版官方培訓教材——任何裝置都可接續學習。",
+  title: "可選",
+  body: "免費版為本次瀏覽對話（session-only），你仍可完成全部模組（可自行複製貼上作筆記）。每月 USD $5 訂閱可雲端儲存對話紀錄，並使用完整版官方培訓教材。",
   subscribe: "訂閱",
   subscribeRedirecting: "跳轉中…",
-  signInToSubscribe: "請先登入以訂閱",
 };
 
 export function getTrainingSubscribeCardCopy(
